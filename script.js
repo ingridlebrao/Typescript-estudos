@@ -122,6 +122,22 @@ function fetchCursos() {
     });
 }
 fetchCursos();
+function isCurso(value) {
+    if (value &&
+        typeof value === 'object' &&
+        'nome' in value &&
+        'horas' in value &&
+        'tags' in value) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
 function handleCursos(data) {
-    console.log(data);
+    if (Array.isArray(data)) {
+        data.filter(isCurso).forEach(function (item) {
+            document.body.innerHTML += "\n        <p>".concat(item, "</p>\n        ");
+        });
+    }
 }

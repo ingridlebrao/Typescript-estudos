@@ -110,6 +110,35 @@ async function fetchCursos() {
 
 fetchCursos();
 
+interface Curso {
+  aulas: number;
+  gratuito: boolean;
+  horas: number;
+  idAulas: number[];
+  nivel: 'iniciante' | 'avancado';
+  tags: string[];
+}
+
+function isCurso(value: unknown): value is Curso {
+  if (
+    value &&
+    typeof value === 'object' &&
+    'nome' in value &&
+    'horas' in value &&
+    'tags' in value
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 function handleCursos(data: unknown) {
-  console.log(data);
+  if (Array.isArray(data)) {
+    data.filter(isCurso).forEach((item) => {
+      document.body.innerHTML += `
+        <p>${item.aulas}</p>
+        `;
+    });
+  }
 }
